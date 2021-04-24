@@ -1,0 +1,97 @@
+Big Data-
+
+1. dataset explanation 
+2. problem statement 
+3. explain pre - processing (changes to 2 columns)
+4. explain schemas + rds
+5. sqoop cmds
+6. cft template
+7. power bi insights - (customer analysis & category,brand analysis - by date,day and sales) 
+
+
+
+
+
+1. Data extracted from Kaggle and put on S3 bucket.
+2. In a PySpark session, the data is read and "NA" values are dropped from the dataset
+3. Two main pre-processing steps performed - a) "Category_Code" column split into "Category" and "Sub_Category".
+                                             b) "event_time" column used to obtain "date" and "day" columns.
+
+4. Now the requisite schemas are generated using Spark.SQL. 
+5. Seven schemas generated overall -
+
+c_date - (cart event grouped by date)
+v_date - (view event grouped by date)
+purch_date - (purchase event grouped by date)
+userid_date - (userid by date)
+customer_count_purchase - (purchase event grouped by users >1)
+purchase_c_s_b - (purchase event grouped by c,s,b, sales(price))
+p_v_c_day - (p,v,c event grouped by day) 
+
+6. All the schemas are further converted into ORC format and stored temporarily on the Hive Metastore. 
+
+7. A MySQL RDS instance is created consisting of skeleton structure of the mentioned schemas.
+
+8. Using SQOOP export commands, the schemas stored in Hive are exported to the said MySQL RDS.
+
+9. PowerBI desktop further accesses the created schemas from the MySQL RDS and visualizations are performed on the same. 
+
+
+
+
+
+
+
+
+
+ML-
+
+1. dataset explanation
+2. problem - providing recs
+3. pre-processing 
+4. spark tuning (on emr) -  [
+  {
+    "Classification": "spark",
+    "Properties": {
+      "maximizeResourceAllocation": "true"
+    }
+  }
+
+5. code - group by user_id,date
+6. using mlxtend.preprocessing import TE. 
+7. using apriori(ml.extend library) to get freq itemsets 
+8. used association rules from ml.extend lib 
+9. rules df --> convert 'ant' and 'cons' columns into non-frozen set
+10. saving recommended prods in a csv file
+11. processing csv file on python nb - to generate a fn for providing recs.
+12. tkinter program - for creating gui
+
+
+1. CSV file format of dataset converted into parquet format and stored on s3 ( size reduction from 8gb to 2.7gb)
+2. Before starting EMR, Spark tuning is performed by maximizing executor driver memory ("maximizeResourceAllocation": "true")
+2. Libraries of pyspark-pandas,mlxtend and OnehotEncode is installed in the pyspark session
+3. The data is read into a dataframe and "NA" values are dropped from the dataset
+4. "Category_Code" column split into "Category" and "Sub_Category".
+5. "Sub_category" data is grouped by user_id and date, and stored in a list format
+6. One hot encoding performed using TransactionEncoder from mlxtend library.
+7. The apriori algorithm and association rule mining are used to extract frequent itemsets (items purchased together) from the data and generate rules for frequent item patterns.
+8. The results are then stored in a CSV file.
+9. Tkinter GUI library of python is then used for displaying the recommendations as required. 
+ 
+
+
+Schemas -
+
+1. c_date - (cart event grouped by date)
+2. v_date - (view event grouped by date)
+3. purch_date - (purchase event grouped by date)
+4. userid_date - (userid by date)
+5. customer_count_purchase - (purchase event grouped by users >1)
+6. purchase_c_s_b - (purchase event grouped by category,subcat,brand, sales(price))
+7. p_v_c_day - (p,v,c event grouped by day)
+
+
+
+
+
+
