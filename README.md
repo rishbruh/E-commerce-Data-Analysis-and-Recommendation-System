@@ -1,6 +1,6 @@
 # E-COMMERCE BIG DATA ANALYSIS AND RECOMMENDATION SYSTEM
 
-To perform extensive analysis on an E-Commerce store’s dataset and derive meaningful insights about customer behaviour and to create a rudimentary recommendation system using the Apriori algorithm for the recommendation of products for the user
+To perform extensive analysis on an E-Commerce store’s dataset and derive meaningful insights about customer behaviour and to create a rudimentary recommendation system using the Apriori algorithm for the recommendation of products for the user. This project was done as part of the CDAC Big Data Analytics diploma course.
 
 DATASET USED -
 
